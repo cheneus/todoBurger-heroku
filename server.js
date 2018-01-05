@@ -90,8 +90,8 @@ app.put("/update", (req, res) => {
   console.log("MKAE")
   connection.query("UPDATE burgers SET devoured=1 WHERE id=?", [req.body.id], function(err, result) {
     if (err) throw err;
-  })
-  res.redirect(303, '/')
+  });
+  res.redirect('/')
 })
 
 app.listen(port, function() {
