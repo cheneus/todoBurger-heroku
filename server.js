@@ -15,7 +15,23 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 app.use(express.static('js'));
 
-var connection = mysql.createConnection(process.env.JAWSDB_URL);
+var connection;
+
+if(process.env.JAWSDB_URL) {
+  //Heroku deployment
+    connection = mysql.createConnection(process.env.JAWSDB_URL);
+} else {
+  //local host
+    connection = mysql.createConnection({
+        root: 3000,
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "burgers_db",
+    });
+};
+
+// var connection = mysql.createConnection(process.env.JAWSDB_URL);
 
 connection.connect(function(err) {
   if (err) {
@@ -72,7 +88,7 @@ app.put("/update", (req, res) => {
   // UPDATE `burgers_db`.`burgers` SET `devoured`='1' WHERE `id`='1';
   console.log(req.body.id)
   console.log("MKAE")
-  connection.query("UPDATE burgers_db.burgers SET devoured=1 WHERE id=?", [req.body.id], function(err, result) {
+  connection.query("UPDATE burgers SET devoured=1 WHERE id=?", [req.body.id], function(err, result) {
     if (err) throw err;
   })
   res.redirect(303, '/')
