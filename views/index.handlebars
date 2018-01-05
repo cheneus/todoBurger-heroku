@@ -1,0 +1,46 @@
+<h1 class="jumbotron text-center">Grand Burger To Eat List?</h1>
+<!-- <h3 class="bg-info rounded p-4 text-center">Save the burger you need to get to later</h3> -->
+<div id="burgerEntry" class="row">
+  <div id="readyToBe" class="col-md-6">
+    <div class="card">
+      <h4 class="card-header">Cant Wait to be eaten</h4>
+      <div class="card-block px-2">
+        <ul>
+          {{#each burgers}} {{#unless this.devoured}}
+          <li data-burger={{this.id}} class="my-2">
+            <label> {{this.burger_name}}</label>
+            <button class='btn btn-danger delete float-right'>x</button>
+            <button class='btn btn-success eat float-right'>Nom</button>
+          </li>
+          {{/unless}} {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="eaten" class="col-md-6 my-2 my-md-0">
+    <div class="card">
+      <h4 class="card-header">Goodbye World</h4>
+      <div class="card-block px-2">
+        <ul>
+          {{#each burgers}} {{#if this.devoured}}
+          <li data-burger={{this.id}} class="my-2">
+            <label>{{this.burger_name}}</label>
+            <button class='btn btn-danger delete float-right'>x</button>
+          </li>
+          {{/if}} {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row my-2">
+  <div class="col ">
+    <form action="/add" method="POST">
+      <div class="form-group">
+        <label for="addBurger">Add a new burger to your eating list!</label>
+        <input type="text" id="addBurger" name="burger_name" class="form-control">
+      </div>
+      <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+  </div>
+</div>
